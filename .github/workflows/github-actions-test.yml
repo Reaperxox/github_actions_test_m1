@@ -16,7 +16,7 @@ jobs:
     - name: Replicate Changes
       uses: actions/github-script@0.8.0
       env:
-        GITHUB_TOKEN: "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"
+        GITHUB_TOKEN: ""
       with:
         script: |
           const { context } = require("@actions/github");
