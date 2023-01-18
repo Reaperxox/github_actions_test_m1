@@ -16,13 +16,13 @@ jobs:
     - name: Replicate Changes
       uses: actions/github-script@0.8.0
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: "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"
       with:
         script: |
           const { context } = require("@actions/github");
 
-          const sourceRepo = "OWNER/SOURCE_REPO";
-          const targetRepo = "OWNER/TARGET_REPO";
+          const sourceRepo = "Reaperxox/website_portfolio.git";
+          const targetRepo = "NikitaJoshi7/mirror.git";
 
           const octokit = new context.GitHub();
 
