@@ -1,0 +1,44 @@
+name: Replicate Changes
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  replicate:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Replicate Changes
+      uses: actions/github-script@0.8.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        script: |
+          const { context } = require("@actions/github");
+
+          const sourceRepo = "OWNER/SOURCE_REPO";
+          const targetRepo = "OWNER/TARGET_REPO";
+
+          const octokit = new context.GitHub();
+
+          async function run() {
+            const { data: ref } = await octokit.git.getRef({
+              owner: sourceRepo.split("/")[0],
+              repo: sourceRepo.split("/")[1],
+              ref: "heads/main"
+            });
+
+            await octokit.git.createRef({
+              owner: targetRepo.split("/")[0],
+              repo: targetRepo.split("/")[1],
+              ref: "refs/heads/main",
+              sha: ref.object.sha
+            });
+          }
+
+          run();
